@@ -50,7 +50,7 @@ namespace TLDTestMod
 
 
 
-                    if (GetSignBitAsBool(__instance.m_CurrentHP)) //加入這個
+                    if (GetSignBitAsBool(__instance.m_CurrentHP)) 
                     {
                         float decayAmount = customHourLoadDecay * deltaTODHours;
                         __instance.m_CurrentHP = Mathf.Clamp(__instance.m_CurrentHP - decayAmount, 0.1f, 100f);
@@ -113,7 +113,7 @@ namespace TLDTestMod
             }
         }
 
-        public static bool GetSignBitAsBool(float value)//加入這個
+        public static bool GetSignBitAsBool(float value)
         {
             uint bits = BitConverter.ToUInt32(BitConverter.GetBytes(value), 0);
             return ((bits & 0x01) != 0);
