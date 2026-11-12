@@ -46,10 +46,8 @@ namespace TLDTestMod
 
                     __instance.m_CurrentHP = Mathf.Clamp(__instance.m_CurrentHP + chargeAmount, 0f, 100f);
                 }
+                
                 else {
-
-
-
                     if (GetSignBitAsBool(__instance.m_CurrentHP)) 
                     {
                         float decayAmount = customHourLoadDecay * deltaTODHours;
@@ -63,61 +61,62 @@ namespace TLDTestMod
                 }
             }
         }
-
-
-        [HarmonyPatch(typeof(AuroraModularElectrolizer), "Initialize")]
-        internal class AuroraElectrolizer_Initialize
-        {
-            private static void Postfix(AuroraModularElectrolizer __instance)
-            {
-                if (Light.IsMenu())
-                {
-                    return;
-                }
-                if (InterfaceManager.IsMainMenuEnabled() || GameManager.IsOutDoorsScene(GameManager.m_ActiveScene)) //indoor only
-                {
-                    return;
-                }
-
-
-                AuroraActivatedToggle[] radios = __instance.gameObject.GetComponentsInParent<AuroraActivatedToggle>();
-                AuroraScreenDisplay[] screens = __instance.gameObject.GetComponentsInChildren<AuroraScreenDisplay>();
-
-                if (radios.Length == 0 && screens.Length == 0)
-                {
-                    Light.electroSources.Add(__instance); 
-                }
-
-            }
-        }
-
-
-        [HarmonyPatch(typeof(AuroraManager), "UpdateForceAurora")]
-        internal class AuroraManager_UpdateForceAurora
-        {
-            private static void Postfix(AuroraManager __instance)
-            {
-                if (Light.IsMenu())
-                {
-                    return;
-                }
-                if (InterfaceManager.IsMainMenuEnabled() || (GameManager.IsOutDoorsScene(GameManager.m_ActiveScene)))
-                {
-                    return;
-                }
-
-                if (Light.electroSources.Count > 0)
-                {
-                    Light.UpdateElectroLights(__instance);
-                }
-            }
-        }
-
-        public static bool GetSignBitAsBool(float value)
-        {
-            uint bits = BitConverter.ToUInt32(BitConverter.GetBytes(value), 0);
-            return ((bits & 0x01) != 0);
-        }
-        
     }
+
+
+    [HarmonyPatch(typeof(AuroraModularElectrolizer), "Initialize")]
+    internal class AuroraElectrolizer_Initialize
+    {
+        private static void Postfix(AuroraModularElectrolizer __instance)
+        {
+            if (Light.IsMenu())
+            {
+                return;
+            }
+            if (InterfaceManager.IsMainMenuEnabled() || GameManager.IsOutDoorsScene(GameManager.m_ActiveScene)) //indoor only
+            {
+                return;
+            }
+
+
+            AuroraActivatedToggle[] radios = __instance.gameObject.GetComponentsInParent<AuroraActivatedToggle>();
+            AuroraScreenDisplay[] screens = __instance.gameObject.GetComponentsInChildren<AuroraScreenDisplay>();
+
+            if (radios.Length == 0 && screens.Length == 0)
+            {
+                Light.electroSources.Add(__instance); 
+            }
+
+        }
+    }
+
+
+    [HarmonyPatch(typeof(AuroraManager), "UpdateForceAurora")]
+    internal class AuroraManager_UpdateForceAurora
+    {
+        private static void Postfix(AuroraManager __instance)
+        {
+            if (Light.IsMenu())
+            {
+                return;
+            }
+            if (InterfaceManager.IsMainMenuEnabled() || (GameManager.IsOutDoorsScene(GameManager.m_ActiveScene)))
+            {
+                return;
+            }
+
+            if (Light.electroSources.Count > 0)
+            {
+                Light.UpdateElectroLights(__instance);
+            }
+        }
+    }
+
+    public static bool GetSignBitAsBool(float value)
+    {
+        uint bits = BitConverter.ToUInt32(BitConverter.GetBytes(value), 0);
+        return ((bits & 0x01) != 0);
+    }
+        
+    
 }
