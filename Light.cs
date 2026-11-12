@@ -85,7 +85,7 @@ namespace TLDTestMod
                         }
                         else if (bat.m_CurrentHP < 1 || distance > 3)
                         {
-                            bat.CurrentHP = ModifyFloatBits(bat.m_CurrentHP, false);//加入這個
+                            bat.CurrentHP = ModifyFloatBits(bat.m_CurrentHP, false);
 
                             electroSources[e].UpdateIntensity(1f, 0f);
                             electroSources[e].UpdateLight(true);
@@ -113,7 +113,7 @@ namespace TLDTestMod
                                 else
                                     electroSources[e].StopAudio();
 
-                                bat.CurrentHP = ModifyFloatBits(bat.m_CurrentHP, true);//加入這個
+                                bat.CurrentHP = ModifyFloatBits(bat.m_CurrentHP, true);
                                 ActiveCarBatteriesTemp.Add(bat);
                             }
 
@@ -137,7 +137,7 @@ namespace TLDTestMod
 
         }
 
-        public static float ModifyFloatBits(float originalValue, bool load)//加入這個
+        public static float ModifyFloatBits(float originalValue, bool load)
         {
             uint bits = BitConverter.ToUInt32(BitConverter.GetBytes(originalValue), 0);
 
