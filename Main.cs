@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using HarmonyLib;
 using Il2Cpp;
 using Il2CppTLD.Gear;
@@ -46,9 +46,11 @@ namespace TLDTestMod
 
                     __instance.m_CurrentHP = Mathf.Clamp(__instance.m_CurrentHP + chargeAmount, 0f, 100f);
                 }
-                
                 else {
-                    if (GetSignBitAsBool(__instance.m_CurrentHP)) 
+
+
+
+                    if (GetSignBitAsBool(__instance.m_CurrentHP)) //加入這個
                     {
                         float decayAmount = customHourLoadDecay * deltaTODHours;
                         __instance.m_CurrentHP = Mathf.Clamp(__instance.m_CurrentHP - decayAmount, 0.1f, 100f);
@@ -61,6 +63,13 @@ namespace TLDTestMod
                 }
             }
         }
+
+        public static bool GetSignBitAsBool(float value)//加入這個
+        {
+            uint bits = BitConverter.ToUInt32(BitConverter.GetBytes(value), 0);
+            return ((bits & 0x01) != 0);
+        }
+        
     }
 
 
@@ -84,7 +93,7 @@ namespace TLDTestMod
 
             if (radios.Length == 0 && screens.Length == 0)
             {
-                Light.electroSources.Add(__instance); 
+                Light.electroSources.Add(__instance);
             }
 
         }
@@ -112,11 +121,16 @@ namespace TLDTestMod
         }
     }
 
-    public static bool GetSignBitAsBool(float value)
+    [HarmonyPatch(typeof(Weather), "IsTooDarkForAction", new Type[] { typeof(ActionsToBlock) })]
+    internal class Weather_IsTooDarkForAction
     {
-        uint bits = BitConverter.ToUInt32(BitConverter.GetBytes(value), 0);
-        return ((bits & 0x01) != 0);
+        private static void Postfix(Weather __instance, ref bool __result)
+        {
+            if (__result && GameManager.GetWeatherComponent().IsIndoorScene() && Light.ableActions)
+            {
+                __result = false;
+            }
+        }
     }
-        
-    
+
 }
