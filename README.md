@@ -1,5 +1,7 @@
 # TheLongDark Battery Power Mod
 
+A MelonLoader mod for The Long Dark survival mode.
+
 A lightweight gameplay mod for The Long Dark that allows players to use Car Batteries (GEAR_CarBattery) to power nearby lights and electrical fixtures when there is no active Aurora.
 This mod introduces a dynamic charge and discharge system for car batteries, adding a practical use for them as backup power in your base.
 | State | Condition Change Rate | Description |
