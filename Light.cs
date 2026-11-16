@@ -1,4 +1,4 @@
-﻿using Il2Cpp;
+using Il2Cpp;
 using Il2CppTLD.ModularElectrolizer;
 using System;
 using System.Collections.Generic;
@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 using static Il2Cpp.DarkLightingManager;
+using static Il2CppSystem.Globalization.TimeSpanFormat;
 
 namespace TLDTestMod
 {
@@ -16,7 +17,7 @@ namespace TLDTestMod
     {
         public static List<AuroraModularElectrolizer> electroSources = new List<AuroraModularElectrolizer>();
         private static HashSet<GearItem> activeBatteriesList = new HashSet<GearItem>();
-
+        public static bool ableActions = false;
         internal static bool IsMenu()
         {
             if (GameManager.m_ActiveScene != null)
@@ -36,6 +37,7 @@ namespace TLDTestMod
 
         internal static void UpdateElectroLights(AuroraManager mngr)
         {
+            ableActions = false;
 
             if (mngr.AuroraIsActive())
             {
@@ -83,7 +85,7 @@ namespace TLDTestMod
 
                             continue;
                         }
-                        else if (bat.m_CurrentHP < 1 || distance > 3)
+                        else if (bat.m_CurrentHP < 1 || distance > 3 || bat.m_InPlayerInventory || bat.m_InsideContainer)
                         {
                             bat.CurrentHP = ModifyFloatBits(bat.m_CurrentHP, false);
 
@@ -115,6 +117,10 @@ namespace TLDTestMod
 
                                 bat.CurrentHP = ModifyFloatBits(bat.m_CurrentHP, true);
                                 ActiveCarBatteriesTemp.Add(bat);
+
+                                if(Mathf.Abs(Vector3.Distance(electroSources[e].gameObject.transform.position, GameManager.GetVpFPSPlayer().gameObject.transform.position)) <= 3)
+                                    ableActions = true;
+
                             }
 
 
@@ -137,7 +143,7 @@ namespace TLDTestMod
 
         }
 
-        public static float ModifyFloatBits(float originalValue, bool load)
+        public static float ModifyFloatBits(float originalValue, bool load)//加入這個
         {
             uint bits = BitConverter.ToUInt32(BitConverter.GetBytes(originalValue), 0);
 
