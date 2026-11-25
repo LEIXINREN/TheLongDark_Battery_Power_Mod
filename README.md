@@ -2,6 +2,9 @@
 
 A lightweight gameplay mod for The Long Dark survival mode that allows players to use Car Batteries (GEAR_CarBattery) to power nearby lights and electrical fixtures when there is no active Aurora.
 This mod introduces a dynamic charge and discharge system for car batteries, adding a practical use for them as backup power in your base.
+
+![Uploading Gemini_Generated_Image_v0sb0tv0sb0tv0sb.png…]()
+
 | State | Condition Change Rate | Description |
 | --- | --- | --- |
 | Charging | +3% per hour | Recharges the battery when Aurora is active. |
