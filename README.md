@@ -5,6 +5,7 @@ This mod introduces a dynamic charge and discharge system for car batteries, add
 
 <img width="2730" height="1536" alt="pic" src="https://github.com/user-attachments/assets/26bd7ddd-c0df-40a7-98d4-24a92a744841" />
 
+
 | State | Condition Change Rate | Description |
 | --- | --- | --- |
 | Charging | +3% per hour | Recharges the battery when Aurora is active. |
