@@ -143,7 +143,7 @@ namespace TLDTestMod
 
         }
 
-        public static float ModifyFloatBits(float originalValue, bool load)//加入這個
+        public static float ModifyFloatBits(float originalValue, bool load)
         {
             uint bits = BitConverter.ToUInt32(BitConverter.GetBytes(originalValue), 0);
 
